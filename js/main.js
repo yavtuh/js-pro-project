@@ -3,7 +3,7 @@ const countOfComments = 10;
 const minLikes = 15;
 const maxLikes = 200;
 const descriptions = ['description1', 'description2', 'description3'];
-const name = ['test1', 'test2', 'test3'];
+const name = ['test1', 'test2', 'test3', 'test4', 'test5', 'test6'];
 const messages = ['comments1', 'comments2', 'comments3', 'comments4'];
 const countAvatar = 6;
 
@@ -19,28 +19,23 @@ function getRandomArray(array){
 }
 
 function getComment(index){
+  const randomAvatarName = getRandomNumber(1, countAvatar);
   return {
     id: index + 1,
-    avatar: `img/avatar-${getRandomNumber(1, countAvatar)}.svg`,
+    avatar: `img/avatar-${randomAvatarName}.svg`,
     message: getRandomArray(messages),
-    name: getRandomArray(name),
+    name: name[randomAvatarName - 1],
   };
 }
-const comments = new Array(countOfComments).fill(null).map((e, index) => getComment(index));
+
 
 function getRandomComments(){
-  let minRange = getRandomNumber(1, comments.length);
-  let maxRange = getRandomNumber(1, comments.length);
-
-  while(minRange >= maxRange){
-     minRange = getRandomNumber(1, comments.length);
-     maxRange = getRandomNumber(1, comments.length);
-
+  const countRandomComments = getRandomNumber(1, comments.length);
+  let arrayRandomComments = [];
+  for (let i = 0; i < countRandomComments; i++ ){
+    arrayRandomComments.push(comments[getRandomNumber(0, comments.length -1)]);
   }
-  return comments.filter(
-    (value, index) => index >= minRange - 1 && index <= maxRange - 1
-  );
-
+  return arrayRandomComments;
 }
 
 function getOffer(index){
@@ -52,8 +47,12 @@ function getOffer(index){
     comments: getRandomComments(),
   };
 }
+const comments = new Array(countOfComments).fill(null).map((e, index) => getComment(index));
 const photos = new Array(countOfOffers).fill(null).map((e, index) => getOffer(index));
-console.log(photos);
+
+export {photos};
+
+
 
 
 
