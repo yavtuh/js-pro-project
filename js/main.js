@@ -1,3 +1,5 @@
+import {getPhotos} from "./picture.js";
+
 const countOfOffers = 25;
 const countOfComments = 10;
 const minLikes = 15;
@@ -50,7 +52,10 @@ function getOffer(index){
 const comments = new Array(countOfComments).fill(null).map((e, index) => getComment(index));
 const photos = new Array(countOfOffers).fill(null).map((e, index) => getOffer(index));
 
-export {photos};
+const gallery = photos.map((e) => getPhotos(e));
+console.log(gallery);
+
+
 
 
 
