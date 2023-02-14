@@ -1,4 +1,5 @@
-import {getPhotos} from "./picture.js";
+import {getAllPhotos} from "./picture.js";
+import {showBigPicture} from "./bigpicture.js";
 
 const countOfOffers = 25;
 const countOfComments = 10;
@@ -30,12 +31,11 @@ function getComment(index){
   };
 }
 
-
 function getRandomComments(){
   const countRandomComments = getRandomNumber(1, comments.length);
   let arrayRandomComments = [];
   for (let i = 0; i < countRandomComments; i++ ){
-    arrayRandomComments.push(comments[getRandomNumber(0, comments.length -1)]);
+    arrayRandomComments.push(comments[getRandomNumber(0, comments.length -1)].id);
   }
   return arrayRandomComments;
 }
@@ -49,11 +49,14 @@ function getOffer(index){
     comments: getRandomComments(),
   };
 }
+
 const comments = new Array(countOfComments).fill(null).map((e, index) => getComment(index));
 const photos = new Array(countOfOffers).fill(null).map((e, index) => getOffer(index));
+const gallery = getAllPhotos(photos);
+const pictures = document.querySelector('.pictures');
+pictures.appendChild(gallery);
+showBigPicture(photos, pictures, comments);
 
-const gallery = photos.map((e) => getPhotos(e));
-console.log(gallery);
 
 
 
