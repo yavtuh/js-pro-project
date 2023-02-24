@@ -1,6 +1,7 @@
 import {getAllPhotos} from "./picture.js";
 import {showBigPicture} from "./bigpicture.js";
 
+
 const countOfOffers = 25;
 const countOfComments = 10;
 const minLikes = 15;
@@ -56,9 +57,6 @@ const gallery = getAllPhotos(photos);
 const pictures = document.querySelector('.pictures');
 pictures.appendChild(gallery);
 showBigPicture(photos, pictures, comments);
-
-
-
 
 
 
