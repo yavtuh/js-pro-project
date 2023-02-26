@@ -5,8 +5,8 @@ const fileInput = imgForm.querySelector("#upload-file");
 const modalImgForm = imgForm.querySelector(".img-upload__overlay");
 const closeModalImgFormButton = imgForm.querySelector("#upload-cancel");
 const maxCommentsSize = 140;
-const maxLenghtHashTags =5;
-const maxLenghtHashTag =20;
+const maxLenghtHashTags = 5;
+const maxLenghtHashTag = 20;
 
 fileInput.addEventListener('change', () => {
   showModalImgForm();
@@ -26,6 +26,8 @@ function closeModalImgForm (){
   modalImgForm.classList.add("hidden");
   document.body.classList.remove("modal-open");
   closeModalImgFormButton.removeEventListener('click', closeModalImgForm);
+  hashTagsInput.removeEventListener('input', validate);
+  commentInput.removeEventListener('input', commentsValidate);
   fileInput.value = '';
 }
 
@@ -63,7 +65,7 @@ function validate(e) {
   const re = /(?= #)/g;
   if(hashTagsText.length > 0){
     if(hashTagsText[0] === "#"){
-      const hashTags = hashTagsText.split(re).map((item) =>  item.replace(/\s+/g,''));
+      const hashTags = hashTagsText.split(re).map((item) =>  item.replace(/\s+/g,'').toLowerCase());
       if(!isValidHashTag(hashTags)){
         e.target.setCustomValidity("Хеш-тег не має вмістити спец символи і не більше 20 символів");
         e.target.reportValidity();
@@ -77,7 +79,6 @@ function validate(e) {
         e.target.reportValidity();
       }
     }else{
-      console.log("popal")
       e.target.setCustomValidity("Поле повинне починатися з '#'");
       e.target.reportValidity();
     }
@@ -101,11 +102,10 @@ function isValidHashTag(hashTags){
   const re = /^#[a-zA-Z0-9]*$/;
   let flag = false;
   hashTags.forEach((hashTag) => {
-    if (re.test(hashTag) && hashTag.length < maxLenghtHashTag) {
-      flag = true;
-    }
-    else{
+    if (!(re.test(hashTag) && hashTag.length < maxLenghtHashTag)) {
       flag = false;
+    } else {
+      flag = true;
     }
   });
 return flag;

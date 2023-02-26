@@ -7,7 +7,7 @@ const pictureLikes = pictureElement.querySelector(".picture__likes");
 const pictureComments = pictureElement.querySelector(".picture__comments");
 
 function getPhotos (e){
-  pictureImage.src = `${e.url}`;
+  pictureImage.src = e.url;
   pictureLikes.innerHTML = e.likes;
   pictureComments.innerHTML = e.comments.length;
   pictureAttribute.setAttribute("data-id", e.id);
