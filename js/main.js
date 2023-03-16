@@ -1,6 +1,7 @@
 import {getAllPhotos} from "./picture.js";
 import {showBigPicture} from "./bigpicture.js";
 import "./validform.js";
+import "./editphoto.js";
 
 
 const photos = await fetch("http://localhost:4000/photos")
