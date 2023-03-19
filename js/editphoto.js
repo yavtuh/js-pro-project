@@ -6,6 +6,8 @@ const boxSlider = document.querySelector(".img-upload__effect-level");
 const slider = boxSlider.querySelector(".effect-level__slider");
 const valueSlider = boxSlider.querySelector(".effect-level__value");
 const filters = document.querySelectorAll(".effects__radio");
+const hiddenInputScale = document.querySelector(".hidden-scale");
+const hiddenInputFilter = document.querySelector(".hidden-effect");
 
 const settingsZoom = {
     step: 25,
@@ -62,6 +64,7 @@ function biggerPhoto(){
     if(settingsZoom.scale < settingsZoom.maxStep){
         settingsZoom.scale += settingsZoom.step;
         inputValueScale.value = `${settingsZoom.scale}%`;
+        hiddenInputScale.value = settingsZoom.scale;
         mainPhoto.style.transform = `scale(${ (settingsZoom.scale) /100})`;
     } 
 }
@@ -70,6 +73,7 @@ function smallerPhoto(){
     if(settingsZoom.scale > settingsZoom.minStep){
         settingsZoom.scale -= settingsZoom.step;
         inputValueScale.value = `${settingsZoom.scale}%`;
+        hiddenInputScale.value = settingsZoom.scale;
         mainPhoto.style.transform = `scale(${ (settingsZoom.scale) /100})`;
     }
 }
@@ -104,23 +108,24 @@ function addFilter(filter){
     const filterObj = settingFilter[filter];
     slider.noUiSlider.on("update", function (value) {
         mainPhoto.style.filter = `${filterObj.filter}(${value}${filterObj.measure})`;
+        hiddenInputFilter.value = `${filterObj.filter}(${value}${filterObj.measure})`;
         valueSlider.value = value.join();
     });
 }
 
 
-
-filters.forEach((filter) => {
-    filter.addEventListener('click', function(e){
-        if(typeof slider.noUiSlider !== 'undefined'){
-            slider.noUiSlider.destroy();
-        }
-        getFilter(e.target.value);
-
+export function mainFilterFunction(){
+    filters.forEach((filter) => {
+        filter.addEventListener('click', function(e){
+            if(typeof slider.noUiSlider !== 'undefined'){
+                slider.noUiSlider.destroy();
+            }
+            getFilter(e.target.value);
+        });
     });
-});
-plus.addEventListener('click', biggerPhoto);
-minus.addEventListener('click', smallerPhoto);
+    plus.addEventListener('click', biggerPhoto);
+    minus.addEventListener('click', smallerPhoto);
+}
 document.addEventListener("DOMContentLoaded", (event) => {
     boxSlider.style.display = "none";
 });
