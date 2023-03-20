@@ -1,9 +1,10 @@
 import {getAllPhotos} from "./picture.js";
 import {showBigPicture} from "./bigpicture.js";
 import {mainFilterFunction} from "./editphoto.js";
-import "./sendphoto.js";
+import {mainSendForm} from "./sendphoto.js";
+import "./sort.js";
 
-const photos = await fetch("http://localhost:4000/photos")
+const photosArray = await fetch("http://localhost:4000/photos")
   .then(function (resp) {
     return resp.json();
   })
@@ -11,13 +12,8 @@ const photos = await fetch("http://localhost:4000/photos")
      return error;
   });
 
-const comments = await fetch("http://localhost:4000/comments")
-  .then(function (resp) {
-    return resp.json();
-  })
-  .catch((error) => {
-    return error;
-  });
+const photos = photosArray.photos;
+const comments = photosArray.comments;
 
 console.log(comments)
 const gallery = getAllPhotos(photos);
@@ -29,6 +25,6 @@ showBigPicture(photos, pictures, comments);
 
 mainFilterFunction();
 
-
+mainSendForm();
 
 

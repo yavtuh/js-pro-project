@@ -1,5 +1,6 @@
 import {closeModalImgForm} from "./validform.js";
 import {getAllPhotos} from "./picture.js";
+import {showBigPicture} from "./bigpicture.js";
 
 const imgForm = document.querySelector("#upload-select-image");
 const successTemplate = document.querySelector("#success");
@@ -8,7 +9,8 @@ const successButton = success.querySelector(".success__button");
 const errorTemplate = document.querySelector("#error");
 const error = errorTemplate.content.cloneNode(true);
 const errorButton = error.querySelector(".error__button");
-console.log(successButton)
+const body = document.querySelector("body");
+
 async function sendForm(e){
     e.preventDefault();
     
@@ -42,13 +44,23 @@ async function sendForm(e){
 }
 
 function updateGalleryPhoto(data){
-    const gallery = getAllPhotos(data);
+
+    document.querySelectorAll('.picture').forEach((elem) => elem.remove());
+
+    const photos = data.photos;
+    const comments = data.comments;
+
+    const gallery = getAllPhotos(photos);
+
     const pictures = document.querySelector('.pictures');
     pictures.appendChild(gallery);
+
+    showBigPicture(photos, pictures, comments);
+
 }
 
 function showSuccesMessage(){
-    document.querySelector("body").appendChild(success);
+    body.appendChild(success);
 }
 
 function hideSuccessMessage(){
@@ -57,7 +69,7 @@ function hideSuccessMessage(){
 }
 
 function showErrorMessage(){
-    document.querySelector("body").appendChild(error);
+    body.appendChild(error);
 }
 
 function hideErrrorMessage(){
@@ -72,7 +84,9 @@ body.addEventListener('keydown', (e) => {
     }
   })
 
+export function mainSendForm(){
+    errorButton.addEventListener("click", hideErrrorMessage);
+    successButton.addEventListener("click", hideSuccessMessage);
+    imgForm.addEventListener("submit", sendForm);
+}
 
-errorButton.addEventListener("click", hideErrrorMessage);
-successButton.addEventListener("click", hideSuccessMessage);
-imgForm.addEventListener("submit", sendForm);
