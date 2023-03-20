@@ -1,8 +1,7 @@
 import {getAllPhotos} from "./picture.js";
 import {showBigPicture} from "./bigpicture.js";
-import "./validform.js";
-import "./editphoto.js";
-
+import {mainFilterFunction} from "./editphoto.js";
+import "./sendphoto.js";
 
 const photos = await fetch("http://localhost:4000/photos")
   .then(function (resp) {
@@ -22,11 +21,13 @@ const comments = await fetch("http://localhost:4000/comments")
 
 console.log(comments)
 const gallery = getAllPhotos(photos);
+
 const pictures = document.querySelector('.pictures');
 pictures.appendChild(gallery);
+
 showBigPicture(photos, pictures, comments);
 
-
+mainFilterFunction();
 
 
 

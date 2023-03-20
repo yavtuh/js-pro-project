@@ -119,7 +119,9 @@
                   <input type="text" class="text__hashtags" name="hashtags" placeholder="#ХэшТег" required>
                   <textarea class="text__description" name="description" placeholder="Ваш комментарий..."  maxlength="140" ></textarea>
                 </fieldset>
-
+                <!-- Скриті поля для відправки на сервер -->
+                <input type="hidden" name="scale" value="100" class="hidden-scale">
+                <input type="hidden" name="scale" value="none" class="hidden-effect">
                 <!-- Кнопка для отправки данных на сервер -->
                 <button type="submit" class="img-upload__submit" id="upload-submit">Опублікувати</button>
               </div>

@@ -4,6 +4,9 @@ const commentInput = imgForm.querySelector(".text__description");
 const fileInput = imgForm.querySelector("#upload-file");
 const modalImgForm = imgForm.querySelector(".img-upload__overlay");
 const closeModalImgFormButton = imgForm.querySelector("#upload-cancel");
+const previewImg = imgForm.querySelector(".img-upload__preview img");
+const boxSlider = document.querySelector(".img-upload__effect-level");
+const slider = boxSlider.querySelector(".effect-level__slider");
 const maxCommentsSize = 140;
 const maxLenghtHashTags = 5;
 const maxLenghtHashTag = 20;
@@ -13,6 +16,14 @@ fileInput.addEventListener('change', () => {
 });
 
 function showModalImgForm (){
+  const selectedFile = fileInput.files[0];
+    if (selectedFile) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+            previewImg.src = e.target.result;
+          };
+        reader.readAsDataURL(selectedFile);
+    }
   modalImgForm.classList.remove("hidden");
   document.body.classList.add("modal-open");
   fileInput.removeEventListener('change', showModalImgForm);
@@ -22,13 +33,26 @@ closeModalImgFormButton.addEventListener('click', () => {
   closeModalImgForm();
 });
 
-function closeModalImgForm (){
+export function closeModalImgForm (){
   modalImgForm.classList.add("hidden");
   document.body.classList.remove("modal-open");
   closeModalImgFormButton.removeEventListener('click', closeModalImgForm);
   hashTagsInput.removeEventListener('input', validate);
   commentInput.removeEventListener('input', commentsValidate);
-  fileInput.value = '';
+  imgForm.querySelector("#effect-none").checked = true;
+  resetModalImgForm ()
+}
+
+function resetModalImgForm (){
+  fileInput.value = "";
+  hashTagsInput.value = "";
+  commentInput.value = "";
+  previewImg.style = "";
+  boxSlider.style.display = "none";
+  previewImg.setAttribute("class", "");
+  if(typeof slider.noUiSlider !== 'undefined'){
+    slider.noUiSlider.destroy();
+  }
 }
 
 hashTagsInput.addEventListener('input', function(e){
